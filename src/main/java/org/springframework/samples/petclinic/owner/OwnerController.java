@@ -162,4 +162,11 @@ class OwnerController {
 		return mav;
 	}
 
+	@PostMapping("/owners/{ownerId}/delete")
+	public String deleteOwner(@PathVariable("ownerId") int ownerId, RedirectAttributes redirectAttributes) {
+		this.owners.deleteById(ownerId);
+		redirectAttributes.addFlashAttribute("message", "Owner successfully deleted");
+		return "redirect:/owners";
+	}
+
 }

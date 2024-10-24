@@ -205,9 +205,20 @@ class OwnerControllerTest {
 
 		assertThatThrownBy(() -> ownerController.findOwner(ownerId)).isInstanceOf(IllegalArgumentException.class)
 			.hasMessage("Owner ID not found: " + ownerId);
-		assertThat(true).isTrue();
 
 		verify(ownerRepository).findById(ownerId);
+	}
+
+	@Test
+	@DisplayName("Test deleteOwner")
+	void testDeleteOwner() {
+		int ownerId = 1;
+		doNothing().when(ownerRepository).deleteById(ownerId);
+
+		String view = ownerController.deleteOwner(ownerId, redirectAttributes);
+
+		assertThat(view).isEqualTo("redirect:/owners");
+		verify(ownerRepository).deleteById(ownerId);
 	}
 
 }
